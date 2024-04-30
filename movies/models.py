@@ -3,14 +3,14 @@ from django.db import models
 
 # Create your models here.
 class Genre(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=200)
 
     def __str__(self):
         return self.name
 
 
 class MPAARating(models.Model):
-    label = models.CharField(max_length=50)
+    label = models.CharField(max_length=200)
     type = models.CharField(max_length=50)
 
     def __str__(self):
@@ -23,10 +23,10 @@ class Movie(models.Model):
     description = models.TextField()
     image = models.ImageField(upload_to="images/")
     duration = models.IntegerField()
-    genre = models.ManyToManyField(Genre, related_name="movies")
+    genre = models.ManyToManyField(Genre, related_name="genre")
     language = models.CharField(max_length=100)
     mpaaRating = models.ForeignKey(
-        MPAARating, on_delete=models.CASCADE, related_name="movies"
+        MPAARating, on_delete=models.CASCADE, related_name="rating"
     )
     userRating = models.CharField(max_length=10)
 
