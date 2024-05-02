@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class="header">
+    <h1>{{movie.name}}</h1>
+    <p>( {{movie.mpaaRating}} )</p>
+    <a href="javascript:history.back()">
+        <button>Back </button>
+    </a>
+</div>
+
+<div class="detail-container">
+    <div> <img src="{{ movie.image.url }}" alt="{{ movie.name }}" height="600px" width="400px"></div>
+    <div class="description-container">
+        <h2>Details</h2>
+        <p> Genre :
+            {% for genre  in movie.genre.all  %}
+            {{genre.name}}{% if not forloop.last %},{% else %}. {% endif %}
+            {% endfor %}
+        </p>
+        <p> Language : {{movie.language}}</p>
+        <p> Duration : {{movie.duration}} Minutes</p>
+        <p> User Rating : {{movie.userRating}}</p>
+        <h2>Synopsis</h2>
+        <p> {{movie.description}}</p>
+    </div>
+</div>
+{% endblock %}

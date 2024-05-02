@@ -11,3 +11,4 @@ class MPAARating(admin.ModelAdmin):
     inlines = [MovieInline,]
 
 admin.site.register(Genre)
+admin.site.register(Movie)

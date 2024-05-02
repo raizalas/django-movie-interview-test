@@ -30,11 +30,11 @@ class Genre(models.Model):
 
 
 class MPAARating(models.Model):
-    label = models.CharField(max_length=200)
+    label = models.CharField(max_length=200, null=True, blank=True)
     type = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.label
+        return self.type + " " + str(self.label)
 
 
 class Movie(models.Model):
@@ -45,8 +45,15 @@ class Movie(models.Model):
     duration = models.IntegerField()
     genre = models.ManyToManyField(Genre, related_name="genre")
     language = models.CharField(max_length=100)
-    mpaaRating = models.ForeignKey(MPAARating, on_delete=models.CASCADE, related_name="movies")
-    userRating = models.IntegerField(validators=[MaxValueValidator(5, message="Maximum rating is 5")])
+    mpaaRating = models.ForeignKey(
+        MPAARating, on_delete=models.CASCADE, related_name="movies"
+    )
+    userRating = models.IntegerField(
+        validators=[MaxValueValidator(5, message="Maximum rating is 5")]
+    )
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse("movie-detail", args=[str(self.id)])
