@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.db.models import UniqueConstraint
 from django.db.models.functions import Lower
+from django.core.validators import MaxValueValidator
 
 
 # Create your models here.
@@ -44,10 +45,8 @@ class Movie(models.Model):
     duration = models.IntegerField()
     genre = models.ManyToManyField(Genre, related_name="genre")
     language = models.CharField(max_length=100)
-    mpaaRating = models.ForeignKey(
-        MPAARating, on_delete=models.CASCADE, related_name="rating"
-    )
-    userRating = models.CharField(max_length=10)
+    mpaaRating = models.ForeignKey(MPAARating, on_delete=models.CASCADE, related_name="movies")
+    userRating = models.IntegerField(validators=[MaxValueValidator(5, message="Maximum rating is 5")])
 
     def __str__(self):
         return self.name

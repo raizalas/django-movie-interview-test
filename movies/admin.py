@@ -1,7 +1,13 @@
 from django.contrib import admin
 from .models import Movie, MPAARating, Genre
 
-# Register your models here.
-admin.site.register(Movie)
-admin.site.register(MPAARating)
+
+class MovieInline(admin.StackedInline):
+    model = Movie
+    extra = 0
+
+@admin.register(MPAARating)
+class MPAARating(admin.ModelAdmin):
+    inlines = [MovieInline,]
+
 admin.site.register(Genre)
